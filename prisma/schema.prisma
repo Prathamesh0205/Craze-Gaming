@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch","fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+
+model User{
+  id String @id @default(uuid())
+  username String @unique
+  imageUrl String @db.Text //store larger string
+  externalUserId String @unique
+  bio String? @db.Text
+
+  blocking Block[] @relation("Blocking")
+  blockedby Block[] @relation("BlockedBy")
+  following Follow[] @relation("Following")
+  followedBy Follow[] @relation("FollowedBy")
+
+  stream Stream?
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//populate using webhook
+//when user signup using clerk we fire event hook to connect to db and apply data to database eg:username
+//npx prisma generate add it to local environment to access user model (server model of nextjs)
+
+
+model Follow{
+  id String @id @default(uuid())
+  followerId String
+  followingId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  follower User @relation(name:"Following",fields: [followerId],references: [id],onDelete: Cascade)
+  following User @relation(name:"FollowedBy",fields:[followingId],references: [id],onDelete: Cascade)
+  @@unique([followerId,followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model Block{
+  id String @id @default(uuid())
+  blockerId String
+  blockedId String
+
+  blocker User @relation(name:"Blocking",fields: [blockerId],references: [id],onDelete: Cascade)
+
+  blocked User @relation(name:"BlockedBy",fields: [blockedId],references: [id],onDelete: Cascade)
+
+ @@unique([blockedId,blockerId])
+  @@index([blockedId])
+  @@index([blockerId])
+
+}
+
+model Stream{
+  id String @id @default(uuid())
+  name String @db.Text
+  thumbnailUrl String? @db.Text
+
+  ingressId String? @unique
+  serverUrl String? @db.Text
+  streamKey String? @db.Text
+
+  isLive Boolean @default(false)
+  isChatEnabled Boolean @default(true)
+  isChatDelayed Boolean @default(false)
+  isCharFollowersOnly Boolean @default(false)
+
+  userId String @unique
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([ingressId])
+  @@fulltext([name])
+
+}

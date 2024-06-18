@@ -1,0 +1,10 @@
+local tunnel
+
+//expose the localhost to other services 
+//we need webhook we need them to be allowed to connect to local host
+// in production we will use universal url 
+// in development we need to find a way to expose our localhost to everyone with internet having url
+//our website is accessible to localhost:3000 and we cant connect it to webhooks
+
+//to get stable url
+// url:-ngrok http --domain=relieved-normal-badger.ngrok-free.app 80
