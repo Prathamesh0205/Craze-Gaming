@@ -9,10 +9,10 @@ import { Skeleton } from "../ui/skeleton";
 interface VideoProps{
     hostName:string;
     hostIdentity:string;
-    children:React.ReactNode;
+
 }
 
-export const Video=({hostName,hostIdentity,children}:VideoProps)=>{
+export const Video=({hostName,hostIdentity}:VideoProps)=>{
     const connectionState=useConnectionState();
     const participant=useRemoteParticipant(hostIdentity);
     const track=useTracks([
@@ -27,7 +27,7 @@ export const Video=({hostName,hostIdentity,children}:VideoProps)=>{
             content=<LoadingVideo label={connectionState}/>
         }else
         {
-            content=<LiveVideo participant={participant} children={children}/>
+            content=<LiveVideo participant={participant} />
         }
     return (
         <div className="aspect-video border-b group relative">

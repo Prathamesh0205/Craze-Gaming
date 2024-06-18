@@ -27,7 +27,7 @@ export const CommunityItem=({hostName,viewerName,participantIdentity,participant
         if(!participantName||isSelf||!isHost)return;
 
         startTransition(()=>{
-            onBlock(participantName).then(()=>toast.success(`Blocked${participantName}`)).catch(()=>toast.error("Something went wrong"))
+            onBlock(participantIdentity).then(()=>toast.success(`Blocked${participantName}`)).catch(()=>toast.error("Something went wrong"))
         })
     }
 return (

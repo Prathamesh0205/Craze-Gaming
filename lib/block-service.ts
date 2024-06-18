@@ -14,10 +14,7 @@ export const isBlockedByUser=async(id:string)=>{
             id
         }
      })
-     if(!self)
-        {
-            return false;
-        }
+   
 
      if(!otherUser)
         {
@@ -49,14 +46,12 @@ export const isBlockedByUser=async(id:string)=>{
 
 export const blockUser=async(id:string)=>{
     const self=await getSelf();
+
     const otherUser=await db.user.findUnique({
         where:{id}
     });
-    if(!self)
-        {
-            return new Error("Please login")
-        }
-
+  
+       console.log(otherUser,id)
         
     if(!otherUser)
     {

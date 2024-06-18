@@ -90,10 +90,7 @@ export const followUser=async(id:string)=>{
        const otherUser= await db.user.findUnique({
             where:{id}
        })
-      if(!self)
-        {
-            throw new Error("Please Login");
-        }
+   
         if(!otherUser)
             {
                 throw new Error("User not found")

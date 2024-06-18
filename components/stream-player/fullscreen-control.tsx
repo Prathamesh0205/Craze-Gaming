@@ -6,11 +6,11 @@ import { Hint } from "../hint";
 interface FullScreenControlProps{
     isFullscreen:boolean;
     onToggle:()=>void;
-    children:React.ReactNode;
+ 
 
 }
 
-export const FullScreenControl=({isFullscreen,onToggle,children}:FullScreenControlProps)=>
+export const FullScreenControl=({isFullscreen,onToggle}:FullScreenControlProps)=>
     {
       const Icon=isFullscreen?Minimize:Maximize;
       const label=isFullscreen?"Exit fullscreen":"Enter fullscreen"

@@ -9,10 +9,10 @@ import { VolumeControl } from "./volume-control"
 
 interface LiveVideoProps{
     participant:Participant
-    children:React.ReactNode
+
 }
 
-export const LiveVideo=({participant,children}:LiveVideoProps)=>{
+export const LiveVideo=({participant}:LiveVideoProps)=>{
     const videoRef=useRef<HTMLVideoElement>(null);
     const wrapperRef=useRef<HTMLDivElement>(null);
 
@@ -70,7 +70,7 @@ export const LiveVideo=({participant,children}:LiveVideoProps)=>{
             <div className="absolute top-0 h-full w-full opacity-0 hover:opacity-100 hover:transition-all">
                 <div className="absolute bottom-0 flex h-14 w-full items-center justify-between bg-gradient-to-r from-neutral-900 px-4 ">
                     <VolumeControl onChange={onVolumeChange} value={volume} onToggle={toggleMute}/>
-                    <FullScreenControl isFullscreen={isFullscreen} onToggle={toggleFullscreen} children={children} />
+                    <FullScreenControl isFullscreen={isFullscreen} onToggle={toggleFullscreen}  />
                 </div>
             </div>
         </div>

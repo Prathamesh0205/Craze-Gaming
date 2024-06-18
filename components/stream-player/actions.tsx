@@ -37,7 +37,8 @@ export const Actions=({hostIdentity,isFollowing,isHost}:ActionsProps)=>{
         }
         if(isHost)return;
 
-        if(isFollowing){
+    
+        if(!isFollowing){
         handleFollow()
         }else{
           handleUnfollow()

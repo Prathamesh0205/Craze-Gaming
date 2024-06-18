@@ -55,7 +55,7 @@ export const ChatForm=({onSubmit,value,onChange,isHidden,isChatFollowersOnly,isD
  return (<form onSubmit={handleSubmit}className="flex flex-col item-center gap-y-4 p-3">
     <div className="w-full">
         <ChatInfo isDelayed={isDelayed} isFollowersOnly={isChatFollowersOnly}/>
-    <Input onChange={(e)=>{onChange(e.target.value)}} value={value} disabled={isDisabled} placeholder="Send a message" className={cn("border-black/10",isChatFollowersOnly&&"rounded-t-none border-t-0")}/>
+    <Input onChange={(e)=>{onChange(e.target.value)}} value={value} disabled={isDisabled} placeholder="Send a message" className={cn("border-black/10",(isChatFollowersOnly || isDelayed) &&"rounded-t-none border-t-0")}/>
     </div>
     <div className="ml-auto">
         <Button type="submit" size={"sm"} disabled={isDisabled}>
