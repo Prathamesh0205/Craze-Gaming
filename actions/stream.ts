@@ -23,12 +23,14 @@ export const updateStream=async (values:Partial<Stream>)=>{
         {
             throw new Error("Stream not found")
         }
+     
 
         const validData={
             name:values.name,
             isChatEnabled:values.isChatEnabled,
             isCharFollowersOnly:values.isCharFollowersOnly,
-            isChatDelayed:values.isChatDelayed
+            isChatDelayed:values.isChatDelayed,
+            isLive:values.isLive
         }
 
          const stream= await db.stream.update({

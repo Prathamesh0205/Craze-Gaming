@@ -9,10 +9,10 @@ interface CreatorPageProps{
     params:{
         username:string;
     }
-    children:React.ReactNode
+
 }
 
-const CreatorPage=async({params,children}:CreatorPageProps)=>{
+const CreatorPage=async({params}:CreatorPageProps)=>{
 
    const externalUser=await currentUser();
    const user=await getUserByUsername(params.username);
@@ -24,7 +24,7 @@ const CreatorPage=async({params,children}:CreatorPageProps)=>{
     }
     return (
         <div className="h-full">
-            <StreamPlayer user={user} stream={user.stream} isFollowing={true} children={children}/>
+            <StreamPlayer user={user} stream={user.stream} isFollowing={true} />
         </div>
     )
 }

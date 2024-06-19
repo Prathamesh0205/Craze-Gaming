@@ -1,11 +1,27 @@
+import { tree } from "next/dist/build/templates/app-page";
 import { db } from "./db"
 export const getUserByUsername=async(username:string)=>{
     const user=await db.user.findUnique({
         where:{
             username
         },
-        include:{
-            stream:true,
+        select:{
+            id:true,
+            username:true,
+            bio:true,
+            imageUrl:true,
+            externalUserId:true,
+            stream:{
+                select:{
+                    id:true,
+                    isLive:true,
+                    isChatDelayed:true,
+                    isCharFollowersOnly:true,
+                    isChatEnabled:true,
+                    thumbnailUrl:true,
+                    name:true,
+                }
+            },
             _count:{
                 select:{
                     followedBy:true,

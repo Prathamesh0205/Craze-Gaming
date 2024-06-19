@@ -45,10 +45,7 @@ export const resetIngresses=async(hostIdentity:string)=>{
 export const createIngress=async(ingressType:IngressInput)=>{
     const self=await getSelf();
 //TODO:Reset previous ingress
-    if(!self)
-        {
-            throw new Error("Please Login");
-        }
+  
 
         await resetIngresses(self.id);
 
