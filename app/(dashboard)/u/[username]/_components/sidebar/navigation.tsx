@@ -31,12 +31,6 @@ export const Navigation=()=>{
             href:`/u/${user?.username}/chat`,
             icon:MessageSquare,
         },
-        {
-
-            label:"Community",
-            href:`/u/${user?.username}/community`,
-            icon:Users,
-        }
     ];
 
 

@@ -54,7 +54,7 @@ let options:CreateIngressOptions={
     roomName:self.id,
     participantName:self.username,
     participantIdentity:self.id,
- 
+   
 }
 
 
@@ -63,14 +63,20 @@ if (ingressType === IngressInput.WHIP_INPUT) {
     options.enableTranscoding=true;
 } else {
     options.video ={
-         name:self.username,
-        source: TrackSource.CAMERA,
-        preset:IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS
-    };
+        name:self.username,
+       source: TrackSource.CAMERA,
+       encodingOptions:{
+        value:IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
+        case:"preset"
+       }
+   }
     options.audio = {
         name:self.username,
         source: TrackSource.MICROPHONE,
-        preset:IngressAudioEncodingPreset.OPUS_STEREO_96KBPS
+        encodingOptions:{
+            value:IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
+            case:"preset"
+           }
     };
 }
 
