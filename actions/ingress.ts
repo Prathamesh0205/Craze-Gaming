@@ -10,6 +10,7 @@ import { getSelf } from "@/lib/auth-service"
 import { TrackSource } from "livekit-server-sdk/dist"
 
 import { revalidatePath } from "next/cache"
+import { NextResponse } from "next/server"
 
 
 const roomService=new RoomServiceClient(
@@ -20,6 +21,7 @@ const roomService=new RoomServiceClient(
 const ingressClient=new IngressClient(process.env.LIVEKIT_API_URL!,process.env.LIVEKIT_API_KEY!,process.env.LIVEKIT_API_SECRET!);
 
 export const resetIngresses=async(hostIdentity:string)=>{
+ 
     const ingresses=await ingressClient.listIngress({
         roomName:hostIdentity
     })
@@ -54,7 +56,7 @@ let options:CreateIngressOptions={
     roomName:self.id,
     participantName:self.username,
     participantIdentity:self.id,
-    video:new IngressVideoOptions
+ 
 }
 
 
@@ -62,20 +64,23 @@ let options:CreateIngressOptions={
 if (ingressType === IngressInput.WHIP_INPUT) {
     options.enableTranscoding=true;
 } else {
-    options.video =new IngressVideoOptions({name:self.username,source:TrackSource.CAMERA,encodingOptions:{
+    options.video =new IngressVideoOptions({
+         name:self.username,
+        source: TrackSource.CAMERA,
+        encodingOptions:{
         value:IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
         case:"preset"
-       }})
-   
-    options.audio = new IngressAudioOptions({ name:self.username,source: TrackSource.MICROPHONE, encodingOptions:{
+        }
+    });
+    options.audio = new IngressAudioOptions({
+        name:self.username,
+        source: TrackSource.MICROPHONE,
+        encodingOptions:{
         value:IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
         case:"preset"
-       }})
-       
-        
-       
-    };
-
+        }
+    });
+}
 
 const ingress:IngressInfo=await ingressClient.createIngress(
     ingressType,
@@ -84,6 +89,7 @@ const ingress:IngressInfo=await ingressClient.createIngress(
 
 
 if(!ingress||!ingress.url ||!ingress.streamKey){
+ 
     throw new Error("Failed to create ingress");
 }
 
@@ -96,7 +102,8 @@ await db.stream.update({
     }
 })
 
+
 revalidatePath(`/u/${self.username}/keys`);
-return !!ingress;
+return !!ingress
 
 }
