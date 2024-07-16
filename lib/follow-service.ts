@@ -35,7 +35,7 @@ export const getFollowedUser=async()=>{
             }
         });
 
-        //  console.log(followedUser)
+
         return followedUser;
 
     }catch{

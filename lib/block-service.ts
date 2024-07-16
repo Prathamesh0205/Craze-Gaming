@@ -34,7 +34,7 @@ export const isBlockedByUser=async(id:string)=>{
             }
         },
     })
-    // console.log(existingBlock)
+
 
     return !!existingBlock;
 
