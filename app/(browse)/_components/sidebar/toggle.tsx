@@ -16,7 +16,6 @@ export const Toggle=()=>{
 
 const label=collapsed?"Expand":"Collapse";
 
-console.log(label);
 
     return(<>
     {collapsed&&(

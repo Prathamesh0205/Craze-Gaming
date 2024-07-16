@@ -14,7 +14,7 @@ export const Reccomended = ({ data }:ReccomendedProps) => {
     // console.log(User)
     
    const showLabel=!collapsed && data?.length>0;
-   console.log(data)
+
 
   return <div>
     {showLabel &&(<div className="pl-6 mb-4">

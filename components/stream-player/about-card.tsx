@@ -15,7 +15,7 @@ export const AboutCard=({hostIdentity,hostName,viewerIdentity,bio,followedByCoun
     const isHost=viewerIdentity===hostAsViewer;
 
     const followedByLabel=followedByCount===1?"follower":"followers";
-    console.log(hostName)
+
 
     return (
         <div className="px-4">
