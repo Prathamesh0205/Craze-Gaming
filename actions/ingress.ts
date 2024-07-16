@@ -1,7 +1,7 @@
 "use server"
 
 
-import {IngressAudioEncodingPreset,IngressInput,IngressClient,IngressVideoEncodingPreset,RoomServiceClient, EncodingOptions, IngressVideoOptions,type CreateIngressOptions, IngressInfo}from "livekit-server-sdk"
+import {IngressAudioEncodingPreset,IngressInput,IngressClient,IngressVideoEncodingPreset,RoomServiceClient, EncodingOptions, IngressVideoOptions,type CreateIngressOptions, IngressInfo, IngressAudioOptions}from "livekit-server-sdk"
 
 import { db } from "@/lib/db"
 
@@ -54,7 +54,7 @@ let options:CreateIngressOptions={
     roomName:self.id,
     participantName:self.username,
     participantIdentity:self.id,
-   
+    video:new IngressVideoOptions
 }
 
 
@@ -62,23 +62,20 @@ let options:CreateIngressOptions={
 if (ingressType === IngressInput.WHIP_INPUT) {
     options.enableTranscoding=true;
 } else {
-    options.video ={
-        name:self.username,
-       source: TrackSource.CAMERA,
-       encodingOptions:{
+    options.video =new IngressVideoOptions({name:self.username,source:TrackSource.CAMERA,encodingOptions:{
         value:IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
         case:"preset"
-       }
-   }
-    options.audio = {
-        name:self.username,
-        source: TrackSource.MICROPHONE,
-        encodingOptions:{
-            value:IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
-            case:"preset"
-           }
+       }})
+   
+    options.audio = new IngressAudioOptions({ name:self.username,source: TrackSource.MICROPHONE, encodingOptions:{
+        value:IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
+        case:"preset"
+       }})
+       
+        
+       
     };
-}
+
 
 const ingress:IngressInfo=await ingressClient.createIngress(
     ingressType,
